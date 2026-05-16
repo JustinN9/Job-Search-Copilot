@@ -1,7 +1,5 @@
 # Ephemeral Search Layer Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
-
 **Goal:** Add an on-demand job search system that queries external aggregator APIs (Adzuna first), caches results in memory, and ranks them against a candidate profile — all without persisting to the database.
 
 **Architecture:** A new `search/` module sits alongside the existing `ingestion/` module. Search providers implement a `SearchProvider` protocol. Results flow through the existing `JobNormalizer`, `EmbeddingProvider`, and `RankingPipeline` as transient (in-memory) `JobPosting` objects. A two-tier TTL cache (query-level + job-level) prevents redundant API calls and embedding recomputation.
